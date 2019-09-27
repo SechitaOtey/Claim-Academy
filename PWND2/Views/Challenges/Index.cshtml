@@ -1,0 +1,51 @@
+﻿@model IEnumerable<PWND2.Models.Challenge>
+
+@{
+    ViewBag.Title = "Challenges";
+}
+
+
+
+<p>
+    @Html.ActionLink("Create New", "Create")
+</p>
+<table class="table">
+    <tr>
+        <th>
+            @Html.DisplayNameFor(model => model.Duration)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.EndDate)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Activity.ActivityName)
+        </th>
+        <th>
+            (Winner)
+        </th>
+        <th></th>
+    </tr>
+
+@foreach (var item in Model) {
+    <tr>
+        <td>
+            @Html.DisplayFor(modelItem => item.Duration)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.EndDate)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.Activity.ActivityName)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.WinningActivityLog.KID.KidName)
+        </td>
+        <td>
+            @Html.ActionLink("Enter Challenge", "EnteredChallenge", new { id=item.ChallengeId }) |
+            @Html.ActionLink("Details", "Details", new { id=item.ChallengeId }) |
+            @Html.ActionLink("Invite Others", "SendChallenge",new { id=item.ChallengeId })
+        </td>
+    </tr>
+}
+
+</table>

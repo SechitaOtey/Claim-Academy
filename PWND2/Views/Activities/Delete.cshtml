@@ -1,0 +1,56 @@
+﻿@model PWND2.Models.Activity
+
+@{
+    ViewBag.Title = "Delete";
+}
+
+<h2>Delete</h2>
+
+<h3>Are you sure you want to delete this?</h3>
+<div>
+    <h4>Activity</h4>
+    <hr />
+    <dl class="dl-horizontal">
+        <dt>
+            @Html.DisplayNameFor(model => model.ActivityName)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.ActivityName)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.ScoringFactor)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.ScoringFactor)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.PointMultiplier)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.PointMultiplier)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.ActivityCategory.Category)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.ActivityCategory.Category)
+        </dd>
+
+    </dl>
+
+    @using (Html.BeginForm()) {
+        @Html.AntiForgeryToken()
+
+        <div class="form-actions no-color">
+            <input type="submit" value="Delete" class="btn btn-default" /> |
+            @Html.ActionLink("Back to List", "Index")
+        </div>
+    }
+</div>

@@ -1,0 +1,66 @@
+﻿@model PWND2.Models.ActivityLog
+
+@{
+    ViewBag.Title = "Details";
+}
+
+<h2>Details</h2>
+
+<div>
+    <h4>ActivityLog</h4>
+    <hr />
+    <dl class="dl-horizontal">
+        <dt>
+            @Html.DisplayNameFor(model => model.RawScore)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.RawScore)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.LogDate)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.LogDate)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.Points)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Points)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.Activity.ActivityName)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Activity.ActivityName)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.Challenge.ChallengeId)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Challenge.ChallengeId)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.KID.KidName)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.KID.KidName)
+        </dd>
+
+    </dl>
+</div>
+<p>
+    @Html.ActionLink("Edit", "Edit", new { id = Model.ActivtyLogId }) |
+    @Html.ActionLink("Back to List", "Index")
+</p>

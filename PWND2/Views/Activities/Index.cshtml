@@ -1,0 +1,49 @@
+﻿@model IEnumerable<PWND2.Models.Activity>
+
+@{
+    ViewBag.Title = "Activities";
+}
+
+
+
+
+<table class="table">
+    <tr>
+        <th>
+            @Html.DisplayNameFor(model => model.ActivityName)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.ScoringFactor)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.PointMultiplier)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.ActivityCategory.Category)
+        </th>
+        <th></th>
+    </tr>
+
+@foreach (var item in Model) {
+    <tr>
+        <td>
+            @Html.DisplayFor(modelItem => item.ActivityName)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.ScoringFactor)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.PointMultiplier)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.ActivityCategory.Category)
+        </td>
+        <td>
+            @*@Html.ActionLink("Edit", "Edit", new { id=item.ActivityId }) |
+            @Html.ActionLink("Details", "Details", new { id=item.ActivityId }) |
+            @Html.ActionLink("Delete", "Delete", new { id=item.ActivityId })*@
+        </td>
+    </tr>
+}
+
+</table>

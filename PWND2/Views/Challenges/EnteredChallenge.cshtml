@@ -1,0 +1,50 @@
+﻿@model PWND2.Models.ActivityLog
+
+@{
+    ViewBag.Title = "EnteredChallenge";
+}
+
+<h2>Enter A Challenge</h2>
+
+
+@using (Html.BeginForm("Create", "ActivityLogs",FormMethod.Post)) 
+{
+    @Html.AntiForgeryToken()
+    
+<div class="form-horizontal">
+    <h4>@Model.Activity.ActivityName</h4>
+    <hr />
+    @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+    @Html.HiddenFor(model => model.KidiD)
+    @Html.HiddenFor(model => model.ActivityId)
+    @Html.HiddenFor(model => model.LogDate)
+    @Html.HiddenFor(model => model.Points)
+    @Html.HiddenFor(model => model.ChallengeId)
+
+<p>
+    By submitting your scores you have participated in @Model.Activity.ActivityName for @Model.Challenge.Duration.Value.Minutes minutes and  @Model.Challenge.Duration.Value.Seconds Seconds
+
+</p>
+    <div class="form-group">
+        <label for="RawScore" class="control-label col-md-2">What was your score in @Model.Activity.ScoringFactor?</label>
+        <div class="col-md-10">
+            @Html.EditorFor(model => model.RawScore, new { htmlAttributes = new { @class = "form-control" } })
+            @Html.ValidationMessageFor(model => model.RawScore, "", new { @class = "text-danger" })
+        </div>
+    </div>
+    
+      <div class="form-group">
+        <div class="col-md-offset-2 col-md-10">
+            <input type="submit" value="Create" class="btn btn-default" />
+        </div>
+    </div>
+</div>
+}
+
+<div>
+    @Html.ActionLink("Back to List", "Index")
+</div>
+
+@section Scripts {
+    @Scripts.Render("~/bundles/jqueryval")
+}

@@ -1,0 +1,74 @@
+﻿<html>
+
+<head>
+    <title>PWND</title>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <link href="~/css2/main.css" rel="stylesheet" />
+   
+</head>
+<body class="subpage">
+
+
+    <nav id="menu">
+        <ul class="links">
+            <li>@Html.ActionLink("HOME", "Index", "Home")</li>
+            <li>@Html.ActionLink("ABOUT", "About", "Home")</li>
+            <li>@Html.ActionLink("ACTIVITIES", "Index", "Activities")</li>
+            <li>@Html.ActionLink("CHALLENGES", "Index", "Challenges")</li>
+            <li>@Html.ActionLink("THE KID", "Index", "KIDs")</li>
+            <li>@Html.ActionLink("ACTIVITY LOG", "Index", "ActivityLogs")</li>
+            <li>@Html.ActionLink("CONTACT", "Contact", "Home")</li>
+
+
+            @Html.Partial("_LoginPartial")
+        </ul>
+
+    </nav>
+
+    <!-- One -->
+
+    <header id="header">
+        <div class="logo"><a href="index.html">PWND<span>Playfully Winning Nutritionalistic Demeanors</span></a></div>
+        <a href="#menu">Menu</a>
+    </header>
+
+    <section id="One" class="wrapper style3">
+        <div class="inner">
+            <header class="align-center">
+                <p>PWND<br><span>Playfully Winning Nutritionalistic Demeanors</span></p>
+                <h2>@ViewBag.Title.</h2>
+
+
+            </header>
+        </div>
+    </section>
+
+    @RenderBody()
+
+    <!-- Footer -->
+    <footer id="footer">
+        <div class="container">
+            <ul class="icons">
+                <li><a href="#" class="icon fa-twitter"><span class="label">Twitter</span></a></li>
+                <li><a href="#" class="icon fa-facebook"><span class="label">Facebook</span></a></li>
+                <li><a href="#" class="icon fa-instagram"><span class="label">Instagram</span></a></li>
+                <li><a href="#" class="icon fa-envelope-o"><span class="label">Email</span></a></li>
+            </ul>
+        </div>
+        <div class="copyright">
+            &copy; Sechita P. Otey. All rights reserved.
+        </div>
+    </footer>
+
+    <!-- Scripts -->
+    <script src="~/js2/jquery.min.js"></script>
+    <script src="~/js2/jquery.scrollex.min.js"></script>
+    <script src="~/js2/skel.min.js"></script>
+    <script src="~/js2/main.js"></script>
+    <script src="~/js2/util.js"></script>
+
+    @RenderSection("scripts", false)
+
+</body>
+</html>

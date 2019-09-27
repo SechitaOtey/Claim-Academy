@@ -1,0 +1,41 @@
+﻿@model PWND2.Models.KID
+
+@{
+    ViewBag.Title = "Y O U";
+}
+
+
+
+<div>
+      
+    <dl class="dl-horizontal">
+        <dt>
+            @Html.DisplayNameFor(model => model.KidName)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.KidName)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.Email)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Email)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.PointsGoal)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.PointsGoal)
+        </dd>
+
+    </dl>
+</div>
+<p>
+    @Html.ActionLink("Edit", "Edit", new { id = Model.KidiD }) |
+    @Html.ActionLink("Back to List", "Index")
+</p>

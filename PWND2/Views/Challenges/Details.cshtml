@@ -1,0 +1,63 @@
+﻿@model PWND2.Models.Challenge
+
+@{
+    ViewBag.Title = "Details";
+}
+
+<h2>Details</h2>
+
+<div>
+    <h4>Challenge</h4>
+    <hr />
+    <dl class="dl-horizontal">
+        <dt>
+            @Html.DisplayNameFor(model => model.Duration)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Duration)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.EndDate)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.EndDate)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.Activity.ActivityName)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Activity.ActivityName)
+        </dd>
+
+        <dt>
+            WINNER
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.WinningActivityLog.KID.KidName)
+        </dd>
+
+        <dt>
+            Participants
+
+        </dt>
+        
+        <dd>
+            <ul>
+                @foreach (var al in Model.ActivityLogs.OrderByDescending(l=>l.Points))
+                {
+                     <li>@al.Points - @al.KID.KidName</li>
+                }
+            </ul>
+        </dd>
+    </dl>
+</div>
+<p>
+    @Html.ActionLink("Invite Others", "SendChallenge", new { id = Model.ChallengeId }) |
+    @Html.ActionLink("Back to List", "Index")
+</p>

@@ -1,0 +1,408 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+  <!-- EF Runtime content -->
+  <edmx:Runtime>
+    <!-- SSDL content -->
+    <edmx:StorageModels>
+    <Schema Namespace="PWNDModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+        <EntityType Name="Activity">
+          <Key>
+            <PropertyRef Name="ActivityId" />
+          </Key>
+          <Property Name="ActivityId" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="ActivityName" Type="nvarchar" MaxLength="128" Nullable="false" />
+          <Property Name="ScoringFactor" Type="nvarchar" MaxLength="256" Nullable="false" />
+          <Property Name="PointMultiplier" Type="decimal" Precision="4" Scale="2" Nullable="false" />
+          <Property Name="CategoryId" Type="int" Nullable="false" />
+        </EntityType>
+        <EntityType Name="ActivityCategory">
+          <Key>
+            <PropertyRef Name="ActivityCategoryId" />
+          </Key>
+          <Property Name="ActivityCategoryId" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Category" Type="nvarchar" MaxLength="128" Nullable="false" />
+        </EntityType>
+        <EntityType Name="ActivityLog">
+          <Key>
+            <PropertyRef Name="ActivtyLogId" />
+          </Key>
+          <Property Name="ActivtyLogId" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="KidiD" Type="nvarchar" MaxLength="128" Nullable="false" />
+          <Property Name="ActivityId" Type="int" Nullable="false" />
+          <Property Name="RawScore" Type="int" Nullable="false" />
+          <Property Name="LogDate" Type="datetime" Nullable="false" />
+          <Property Name="Points" Type="decimal" Precision="6" Scale="2" Nullable="false" />
+          <Property Name="ChallengeId" Type="int" />
+        </EntityType>
+        <EntityType Name="Challenge">
+          <Key>
+            <PropertyRef Name="ChallengeId" />
+          </Key>
+          <Property Name="Duration" Type="time" Precision="7" />
+          <Property Name="WinnerId" Type="int" />
+          <Property Name="EndDate" Type="date" />
+          <Property Name="ActivityId" Type="int" Nullable="false" />
+          <Property Name="ChallengeId" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+        </EntityType>
+        <EntityType Name="KID">
+          <Key>
+            <PropertyRef Name="KidiD" />
+          </Key>
+          <Property Name="KidiD" Type="nvarchar" MaxLength="128" Nullable="false" />
+          <Property Name="KidName" Type="nvarchar" MaxLength="128" Nullable="false" />
+          <Property Name="Email" Type="nvarchar" MaxLength="256" Nullable="false" />
+          <Property Name="PointsGoal" Type="int" />
+        </EntityType>
+        <Association Name="FK__Activity__Catego__440B1D61">
+          <End Role="ActivityCategory" Type="Self.ActivityCategory" Multiplicity="1" />
+          <End Role="Activity" Type="Self.Activity" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="ActivityCategory">
+              <PropertyRef Name="ActivityCategoryId" />
+            </Principal>
+            <Dependent Role="Activity">
+              <PropertyRef Name="CategoryId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__ActivityL__Activ__5AEE82B9">
+          <End Role="Activity" Type="Self.Activity" Multiplicity="1" />
+          <End Role="ActivityLog" Type="Self.ActivityLog" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Activity">
+              <PropertyRef Name="ActivityId" />
+            </Principal>
+            <Dependent Role="ActivityLog">
+              <PropertyRef Name="ActivityId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__ActivityL__Chall__5CD6CB2B">
+          <End Role="Challenge" Type="Self.Challenge" Multiplicity="0..1" />
+          <End Role="ActivityLog" Type="Self.ActivityLog" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Challenge">
+              <PropertyRef Name="ChallengeId" />
+            </Principal>
+            <Dependent Role="ActivityLog">
+              <PropertyRef Name="ChallengeId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__ActivtyLo__KidiD__4D94879B">
+          <End Role="KID" Type="Self.KID" Multiplicity="1" />
+          <End Role="ActivityLog" Type="Self.ActivityLog" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="KID">
+              <PropertyRef Name="KidiD" />
+            </Principal>
+            <Dependent Role="ActivityLog">
+              <PropertyRef Name="KidiD" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__Challenge__Activ__52593CB8">
+          <End Role="Activity" Type="Self.Activity" Multiplicity="1" />
+          <End Role="Challenge" Type="Self.Challenge" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Activity">
+              <PropertyRef Name="ActivityId" />
+            </Principal>
+            <Dependent Role="Challenge">
+              <PropertyRef Name="ActivityId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__Challenge__Winne__5165187F">
+          <End Role="ActivityLog" Type="Self.ActivityLog" Multiplicity="0..1" />
+          <End Role="Challenge" Type="Self.Challenge" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="ActivityLog">
+              <PropertyRef Name="ActivtyLogId" />
+            </Principal>
+            <Dependent Role="Challenge">
+              <PropertyRef Name="WinnerId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityContainer Name="PWNDModelStoreContainer">
+          <EntitySet Name="Activity" EntityType="Self.Activity" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="ActivityCategory" EntityType="Self.ActivityCategory" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="ActivityLog" EntityType="Self.ActivityLog" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Challenge" EntityType="Self.Challenge" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="KID" EntityType="Self.KID" Schema="dbo" store:Type="Tables" />
+          <AssociationSet Name="FK__Activity__Catego__440B1D61" Association="Self.FK__Activity__Catego__440B1D61">
+            <End Role="ActivityCategory" EntitySet="ActivityCategory" />
+            <End Role="Activity" EntitySet="Activity" />
+          </AssociationSet>
+          <AssociationSet Name="FK__ActivityL__Activ__5AEE82B9" Association="Self.FK__ActivityL__Activ__5AEE82B9">
+            <End Role="Activity" EntitySet="Activity" />
+            <End Role="ActivityLog" EntitySet="ActivityLog" />
+          </AssociationSet>
+          <AssociationSet Name="FK__ActivityL__Chall__5CD6CB2B" Association="Self.FK__ActivityL__Chall__5CD6CB2B">
+            <End Role="Challenge" EntitySet="Challenge" />
+            <End Role="ActivityLog" EntitySet="ActivityLog" />
+          </AssociationSet>
+          <AssociationSet Name="FK__ActivtyLo__KidiD__4D94879B" Association="Self.FK__ActivtyLo__KidiD__4D94879B">
+            <End Role="KID" EntitySet="KID" />
+            <End Role="ActivityLog" EntitySet="ActivityLog" />
+          </AssociationSet>
+          <AssociationSet Name="FK__Challenge__Activ__52593CB8" Association="Self.FK__Challenge__Activ__52593CB8">
+            <End Role="Activity" EntitySet="Activity" />
+            <End Role="Challenge" EntitySet="Challenge" />
+          </AssociationSet>
+          <AssociationSet Name="FK__Challenge__Winne__5165187F" Association="Self.FK__Challenge__Winne__5165187F">
+            <End Role="ActivityLog" EntitySet="ActivityLog" />
+            <End Role="Challenge" EntitySet="Challenge" />
+          </AssociationSet>
+        </EntityContainer>
+      </Schema></edmx:StorageModels>
+    <!-- CSDL content -->
+    <edmx:ConceptualModels>
+      <Schema Namespace="PWNDModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
+        <EntityType Name="Activity">
+          <Key>
+            <PropertyRef Name="ActivityId" />
+          </Key>
+          <Property Name="ActivityId" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="ActivityName" Type="String" MaxLength="128" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="ScoringFactor" Type="String" MaxLength="256" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="PointMultiplier" Type="Decimal" Precision="4" Scale="2" Nullable="false" />
+          <Property Name="CategoryId" Type="Int32" Nullable="false" />
+          <NavigationProperty Name="ActivityCategory" Relationship="Self.FK__Activity__Catego__440B1D61" FromRole="Activity" ToRole="ActivityCategory" />
+          <NavigationProperty Name="ActivityLogs" Relationship="PWNDModel.FK__ActivityL__Activ__5AEE82B9" FromRole="Activity" ToRole="ActivityLog" />
+          <NavigationProperty Name="Challenges" Relationship="PWNDModel.FK__Challenge__Activ__52593CB8" FromRole="Activity" ToRole="Challenge" />
+        </EntityType>
+        <EntityType Name="ActivityCategory">
+          <Key>
+            <PropertyRef Name="ActivityCategoryId" />
+          </Key>
+          <Property Name="ActivityCategoryId" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Category" Type="String" MaxLength="128" FixedLength="false" Unicode="true" Nullable="false" />
+          <NavigationProperty Name="Activities" Relationship="Self.FK__Activity__Catego__440B1D61" FromRole="ActivityCategory" ToRole="Activity" />
+        </EntityType>
+        <Association Name="FK__Activity__Catego__440B1D61">
+          <End Role="ActivityCategory" Type="Self.ActivityCategory" Multiplicity="1" />
+          <End Role="Activity" Type="Self.Activity" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="ActivityCategory">
+              <PropertyRef Name="ActivityCategoryId" />
+            </Principal>
+            <Dependent Role="Activity">
+              <PropertyRef Name="CategoryId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityContainer Name="PWNDEntities" annotation:LazyLoadingEnabled="true">
+          <EntitySet Name="Activities" EntityType="Self.Activity" />
+          <EntitySet Name="ActivityCategories" EntityType="Self.ActivityCategory" />
+          <AssociationSet Name="FK__Activity__Catego__440B1D61" Association="Self.FK__Activity__Catego__440B1D61">
+            <End Role="ActivityCategory" EntitySet="ActivityCategories" />
+            <End Role="Activity" EntitySet="Activities" />
+          </AssociationSet>
+          <EntitySet Name="KIDs" EntityType="PWNDModel.KID" />
+          <EntitySet Name="ActivityLogs" EntityType="PWNDModel.ActivityLog" />
+          <EntitySet Name="Challenges" EntityType="PWNDModel.Challenge" />
+          <AssociationSet Name="FK__ActivityL__Activ__5AEE82B9" Association="PWNDModel.FK__ActivityL__Activ__5AEE82B9">
+            <End Role="Activity" EntitySet="Activities" />
+            <End Role="ActivityLog" EntitySet="ActivityLogs" />
+          </AssociationSet>
+          <AssociationSet Name="FK__Challenge__Activ__52593CB8" Association="PWNDModel.FK__Challenge__Activ__52593CB8">
+            <End Role="Activity" EntitySet="Activities" />
+            <End Role="Challenge" EntitySet="Challenges" />
+          </AssociationSet>
+          <AssociationSet Name="FK__ActivityL__Chall__5CD6CB2B" Association="PWNDModel.FK__ActivityL__Chall__5CD6CB2B">
+            <End Role="Challenge" EntitySet="Challenges" />
+            <End Role="ActivityLog" EntitySet="ActivityLogs" />
+          </AssociationSet>
+          <AssociationSet Name="FK__ActivtyLo__KidiD__4D94879B" Association="PWNDModel.FK__ActivtyLo__KidiD__4D94879B">
+            <End Role="KID" EntitySet="KIDs" />
+            <End Role="ActivityLog" EntitySet="ActivityLogs" />
+          </AssociationSet>
+          <AssociationSet Name="FK__Challenge__Winne__5165187F" Association="PWNDModel.FK__Challenge__Winne__5165187F">
+            <End Role="ActivityLog" EntitySet="ActivityLogs" />
+            <End Role="Challenge" EntitySet="Challenges" />
+          </AssociationSet>
+        </EntityContainer>
+        <EntityType Name="KID">
+          <Key>
+            <PropertyRef Name="KidiD" />
+          </Key>
+          <Property Name="KidiD" Type="String" Nullable="false" MaxLength="128" FixedLength="false" Unicode="true" />
+          <Property Name="KidName" Type="String" Nullable="false" MaxLength="128" FixedLength="false" Unicode="true" />
+          <Property Name="Email" Type="String" Nullable="false" MaxLength="256" FixedLength="false" Unicode="true" />
+          <Property Name="PointsGoal" Type="Int32" />
+          <NavigationProperty Name="ActivityLogs" Relationship="PWNDModel.FK__ActivtyLo__KidiD__4D94879B" FromRole="KID" ToRole="ActivityLog" />
+        </EntityType>
+        <EntityType Name="ActivityLog">
+          <Key>
+            <PropertyRef Name="ActivtyLogId" />
+          </Key>
+          <Property Name="ActivtyLogId" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="KidiD" Type="String" Nullable="false" MaxLength="128" FixedLength="false" Unicode="true" />
+          <Property Name="ActivityId" Type="Int32" Nullable="false" />
+          <Property Name="RawScore" Type="Int32" Nullable="false" />
+          <Property Name="LogDate" Type="DateTime" Nullable="false" Precision="3" />
+          <Property Name="Points" Type="Decimal" Nullable="false" Precision="6" Scale="2" />
+          <Property Name="ChallengeId" Type="Int32" />
+          <NavigationProperty Name="Activity" Relationship="PWNDModel.FK__ActivityL__Activ__5AEE82B9" FromRole="ActivityLog" ToRole="Activity" />
+          <NavigationProperty Name="Challenge" Relationship="PWNDModel.FK__ActivityL__Chall__5CD6CB2B" FromRole="ActivityLog" ToRole="Challenge" />
+          <NavigationProperty Name="KID" Relationship="PWNDModel.FK__ActivtyLo__KidiD__4D94879B" FromRole="ActivityLog" ToRole="KID" />
+          <NavigationProperty Name="ChallengesWon" Relationship="PWNDModel.FK__Challenge__Winne__5165187F" FromRole="ActivityLog" ToRole="Challenge" />
+        </EntityType>
+        <EntityType Name="Challenge">
+          <Key>
+            <PropertyRef Name="ChallengeId" />
+          </Key>
+          <Property Name="Duration" Type="Time" Precision="7" />
+          <Property Name="WinnerId" Type="Int32" />
+          <Property Name="EndDate" Type="DateTime" Precision="0" />
+          <Property Name="ActivityId" Type="Int32" Nullable="false" />
+          <Property Name="ChallengeId" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <NavigationProperty Name="Activity" Relationship="PWNDModel.FK__Challenge__Activ__52593CB8" FromRole="Challenge" ToRole="Activity" />
+          <NavigationProperty Name="ActivityLogs" Relationship="PWNDModel.FK__ActivityL__Chall__5CD6CB2B" FromRole="Challenge" ToRole="ActivityLog" />
+          <NavigationProperty Name="WinningActivityLog" Relationship="PWNDModel.FK__Challenge__Winne__5165187F" FromRole="Challenge" ToRole="ActivityLog" />
+        </EntityType>
+        <Association Name="FK__ActivityL__Activ__5AEE82B9">
+          <End Type="PWNDModel.Activity" Role="Activity" Multiplicity="1" />
+          <End Type="PWNDModel.ActivityLog" Role="ActivityLog" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Activity">
+              <PropertyRef Name="ActivityId" />
+            </Principal>
+            <Dependent Role="ActivityLog">
+              <PropertyRef Name="ActivityId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__Challenge__Activ__52593CB8">
+          <End Type="PWNDModel.Activity" Role="Activity" Multiplicity="1" />
+          <End Type="PWNDModel.Challenge" Role="Challenge" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Activity">
+              <PropertyRef Name="ActivityId" />
+            </Principal>
+            <Dependent Role="Challenge">
+              <PropertyRef Name="ActivityId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__ActivityL__Chall__5CD6CB2B">
+          <End Type="PWNDModel.Challenge" Role="Challenge" Multiplicity="0..1" />
+          <End Type="PWNDModel.ActivityLog" Role="ActivityLog" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Challenge">
+              <PropertyRef Name="ChallengeId" />
+            </Principal>
+            <Dependent Role="ActivityLog">
+              <PropertyRef Name="ChallengeId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__ActivtyLo__KidiD__4D94879B">
+          <End Type="PWNDModel.KID" Role="KID" Multiplicity="1" />
+          <End Type="PWNDModel.ActivityLog" Role="ActivityLog" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="KID">
+              <PropertyRef Name="KidiD" />
+            </Principal>
+            <Dependent Role="ActivityLog">
+              <PropertyRef Name="KidiD" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__Challenge__Winne__5165187F">
+          <End Type="PWNDModel.ActivityLog" Role="ActivityLog" Multiplicity="0..1" />
+          <End Type="PWNDModel.Challenge" Role="Challenge" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="ActivityLog">
+              <PropertyRef Name="ActivtyLogId" />
+            </Principal>
+            <Dependent Role="Challenge">
+              <PropertyRef Name="WinnerId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+      </Schema>
+    </edmx:ConceptualModels>
+    <!-- C-S mapping content -->
+    <edmx:Mappings>
+      <Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
+        <EntityContainerMapping StorageEntityContainer="PWNDModelStoreContainer" CdmEntityContainer="PWNDEntities">
+          <EntitySetMapping Name="Activities">
+            <EntityTypeMapping TypeName="PWNDModel.Activity">
+              <MappingFragment StoreEntitySet="Activity">
+                <ScalarProperty Name="ActivityId" ColumnName="ActivityId" />
+                <ScalarProperty Name="ActivityName" ColumnName="ActivityName" />
+                <ScalarProperty Name="ScoringFactor" ColumnName="ScoringFactor" />
+                <ScalarProperty Name="PointMultiplier" ColumnName="PointMultiplier" />
+                <ScalarProperty Name="CategoryId" ColumnName="CategoryId" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="ActivityCategories">
+            <EntityTypeMapping TypeName="PWNDModel.ActivityCategory">
+              <MappingFragment StoreEntitySet="ActivityCategory">
+                <ScalarProperty Name="ActivityCategoryId" ColumnName="ActivityCategoryId" />
+                <ScalarProperty Name="Category" ColumnName="Category" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="KIDs">
+            <EntityTypeMapping TypeName="PWNDModel.KID">
+              <MappingFragment StoreEntitySet="KID">
+                <ScalarProperty Name="PointsGoal" ColumnName="PointsGoal" />
+                <ScalarProperty Name="Email" ColumnName="Email" />
+                <ScalarProperty Name="KidName" ColumnName="KidName" />
+                <ScalarProperty Name="KidiD" ColumnName="KidiD" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="ActivityLogs">
+            <EntityTypeMapping TypeName="PWNDModel.ActivityLog">
+              <MappingFragment StoreEntitySet="ActivityLog">
+                <ScalarProperty Name="ChallengeId" ColumnName="ChallengeId" />
+                <ScalarProperty Name="Points" ColumnName="Points" />
+                <ScalarProperty Name="LogDate" ColumnName="LogDate" />
+                <ScalarProperty Name="RawScore" ColumnName="RawScore" />
+                <ScalarProperty Name="ActivityId" ColumnName="ActivityId" />
+                <ScalarProperty Name="KidiD" ColumnName="KidiD" />
+                <ScalarProperty Name="ActivtyLogId" ColumnName="ActivtyLogId" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Challenges">
+            <EntityTypeMapping TypeName="PWNDModel.Challenge">
+              <MappingFragment StoreEntitySet="Challenge">
+                <ScalarProperty Name="ChallengeId" ColumnName="ChallengeId" />
+                <ScalarProperty Name="ActivityId" ColumnName="ActivityId" />
+                <ScalarProperty Name="EndDate" ColumnName="EndDate" />
+                <ScalarProperty Name="WinnerId" ColumnName="WinnerId" />
+                <ScalarProperty Name="Duration" ColumnName="Duration" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+        </EntityContainerMapping>
+      </Mapping>
+    </edmx:Mappings>
+  </edmx:Runtime>
+  <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <Connection>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="MetadataArtifactProcessing" Value="EmbedInOutputAssembly" />
+      </DesignerInfoPropertySet>
+    </Connection>
+    <Options>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="ValidateOnBuild" Value="true" />
+        <DesignerProperty Name="EnablePluralization" Value="true" />
+        <DesignerProperty Name="IncludeForeignKeysInModel" Value="true" />
+        <DesignerProperty Name="UseLegacyProvider" Value="false" />
+        <DesignerProperty Name="CodeGenerationStrategy" Value="None" />
+      </DesignerInfoPropertySet>
+    </Options>
+    <!-- Diagram content (shape and connector positions) -->
+    <Diagrams></Diagrams>
+  </Designer>
+</edmx:Edmx>

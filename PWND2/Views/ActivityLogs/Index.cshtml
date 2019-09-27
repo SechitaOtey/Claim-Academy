@@ -1,0 +1,78 @@
+﻿@model IEnumerable<PWND2.Models.ActivityLog>
+
+@{
+    ViewBag.Title = "Index";
+}
+
+<h2>Index</h2>
+<p>
+       You Have Earned @ViewBag.WeeklyPoints Points This Week Out Of Your Goal Of @(ViewBag.PointsGoal).
+        @if (ViewBag.WeeklyPoints >= ViewBag.PointsGoal)
+        {
+            <text>Whatever, You Think You're On Fire Now!<br />
+           That's AMAAAZIINNNG Keep It Up!!! </text>
+        }
+        else
+        {
+            <text> You Have @(ViewBag.PointsGoal-ViewBag.WeeklyPoints) Points Left To Go. Let's Get It!!!</text>
+        }
+</p>
+<p>
+    @Html.ActionLink("Create New", "Create")
+</p>
+<table class="table">
+    <tr>
+        <th>
+            @Html.DisplayNameFor(model => model.RawScore)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.LogDate)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Points)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Activity.ActivityName)
+        </th>
+        <th>
+            Challenge
+        </th>
+        
+        <th></th>
+    </tr>
+
+@foreach (var item in Model) {
+    <tr>
+        <td>
+            @Html.DisplayFor(modelItem => item.RawScore)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.LogDate)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.Points)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.Activity.ActivityName)
+        </td>
+        <td>
+            @if (item.ChallengeId.HasValue)
+            {
+                <input type="checkbox" checked disabled />
+            }
+            else
+            {
+                <input type="checkbox" disabled />
+            }
+        </td>
+        
+        <td>
+           @if (item.ChallengeId.HasValue && item.Challenge.WinnerId == item.ActivtyLogId)
+           {
+               <text>Guess What You Won!!!</text>
+           }
+        </td>
+    </tr>
+}
+
+</table>
